@@ -9,24 +9,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
+
 
 @RestController
-@RequestMapping("/api")
-public class BaseController {
-    private static Random random = new Random();
+@RequestMapping("/api/mock")
+public class MockController {
+    private static Random random;
+    private static Set<String> nameSet;
+
+    @PostConstruct
+    private void init() {
+        random = new Random();
+        nameSet = new HashSet<>();
+    }
 
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
     public List<Tick> getGameData(HttpRequest request) {
-        return generateRandomDataSet(1500000000, 1000, 50);
+        return generateRandomDataSet(1500000000, 10, 50);
     }
 
-    private Player generateRandomPlayer() {
+    private Player generateRandomPlayer(String name) {
         Player player = new Player();
-        player.setLocationX(random.nextDouble());
-        player.setLocationY(random.nextDouble());
-        player.setPlayer_name(generateRandomString(10));
+        player.setLocationX(random.nextDouble() * random.nextInt(10000));
+        player.setLocationY(random.nextDouble() * random.nextInt(10000));
+        player.setPlayer_name(name);
 
         return player;
     }
@@ -45,9 +57,13 @@ public class BaseController {
         Tick tick = new Tick();
         List<Player> players = new ArrayList<>();
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(generateRandomPlayer());
+        if (nameSet.isEmpty()) {
+            for (int i = 0; i < numberOfPlayers; i++) {
+                nameSet.add(generateRandomString(10));
+            }
         }
+
+        nameSet.forEach(name -> players.add(generateRandomPlayer(name)));
 
         tick.setPlayers(players);
         tick.setTimeStamp(timestamp);
@@ -59,7 +75,7 @@ public class BaseController {
         List<Tick> ticks = new ArrayList<>();
 
         for (int i = 0; i < numberOfTicks; i++) {
-            ticks.add(generateRandomTick(numberOfPlayers, statrtTime + i/2));
+            ticks.add(generateRandomTick(numberOfPlayers, statrtTime + i * 500));
         }
 
         return ticks;
