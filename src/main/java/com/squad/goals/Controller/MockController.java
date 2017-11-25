@@ -31,7 +31,7 @@ public class MockController {
 
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
     public List<Tick> getGameData(HttpRequest request) {
-        return generateRandomDataSet(1500000000, 1000, 50);
+        return generateRandomDataSet(1500000000, 10, 50);
     }
 
     private Player generateRandomPlayer(String name) {
@@ -75,7 +75,7 @@ public class MockController {
         List<Tick> ticks = new ArrayList<>();
 
         for (int i = 0; i < numberOfTicks; i++) {
-            ticks.add(generateRandomTick(numberOfPlayers, statrtTime + i/2));
+            ticks.add(generateRandomTick(numberOfPlayers, statrtTime + i * 500));
         }
 
         return ticks;
