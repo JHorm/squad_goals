@@ -1,17 +1,20 @@
 package com.squad.goals.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
 @Entity
 public class Player {
-	
+
 	@Id
 	private Long recordingId;
 	private Long playerId;
     private double locationX;
     private double locationY;
+    @JsonIgnore
     private Long timestamp;
     @Transient
     private String playerName;
