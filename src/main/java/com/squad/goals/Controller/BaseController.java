@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class BaseController {
     private static Random random = new Random();
 
@@ -23,10 +24,8 @@ public class BaseController {
 
     private Player generateRandomPlayer() {
         Player player = new Player();
-        player.setTeamId(random.nextLong());
         player.setLocationX(random.nextDouble());
         player.setLocationY(random.nextDouble());
-        player.setDead(random.nextBoolean());
         player.setPlayer_name(generateRandomString(10));
 
         return player;
