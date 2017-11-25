@@ -6,15 +6,17 @@ import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.squad.goals.model.Map;
 import com.squad.goals.model.Player;
-import com.squad.goals.repository.PlayerRepositoryCustom;
+import com.squad.goals.repository.GameSessionRepositoryCustom;
 
-public class PlayerRepositoryImpl implements PlayerRepositoryCustom {
+public class GameSessionRepositoryImpl implements GameSessionRepositoryCustom {
 
 	@Autowired
 	private EntityManager entityManager;
 
-	@Override public List<Player> getPlayersBySessionId(Long sessionId) {
+	@Override 
+	public List<Player> getPlayersBySessionId(Long sessionId) {
 		return entityManager.createNativeQuery(
 				"select * FROM (select * FROM (SELECT " +
 						" ps.recording_id, " +
@@ -31,4 +33,21 @@ public class PlayerRepositoryImpl implements PlayerRepositoryCustom {
 				.setParameter("sessionId", sessionId)
 				.getResultList();
 	}
+
+	@Override
+	public Map getMapBySessionId(Long sessionId) {
+		return (Map) entityManager.createNativeQuery(
+				"SELECT " +
+						" m.index, " +
+						" m.map_name as name, " +
+						" cast(substring(m.server_coor FROM '[0-9]+.') as double precision) as corner0x, " +
+						" m.\"Corner0_y\" as corner0y, " +
+						" m.\"Corner1_x\" as corner1x, " +
+						" m.\"Corner1_y\" as corner1y " +
+						"FROM map_coordinates m " +
+						" INNER JOIN server_session s ON (s.map_name = m.map_name AND s.session_id = :sessionId) " +
+						"limit 1", Map.class)
+				.setParameter("sessionId", sessionId)
+				.getSingleResult();
+	} 
 }

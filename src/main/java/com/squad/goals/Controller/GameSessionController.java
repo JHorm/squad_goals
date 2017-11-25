@@ -1,7 +1,7 @@
 package com.squad.goals.Controller;
 
 import com.squad.goals.model.Tick;
-import com.squad.goals.service.PlayerService;
+import com.squad.goals.service.GameSessionService;
 
 import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import java.util.List;
 public class GameSessionController {
 
 	@Autowired
-	private PlayerService playerService;
+	private GameSessionService gameSessionService;
 
     @RequestMapping(value = "/getData/{sessionId}", method = RequestMethod.POST)
     public List<Tick> getGameData(HttpRequest request, @PathVariable Long sessionId) {
-        return playerService.getPlayersBySessionId(sessionId);
+        return gameSessionService.getGameSession(sessionId);
     }
 }

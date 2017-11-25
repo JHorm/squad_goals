@@ -1,11 +1,26 @@
 package com.squad.goals.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Map {
+	
+	@Id
+	private Long index;
     private String name;
     private double corner0x;
     private double corner0y;
     private double corner1x;
     private double corner1y;
+
+	public Long getIndex() {
+		return index;
+	}
+
+	public void setIndex(Long index) {
+		this.index = index;
+	}
 
     public String getName() {
         return name;

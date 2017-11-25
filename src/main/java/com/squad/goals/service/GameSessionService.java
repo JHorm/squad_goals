@@ -1,32 +1,36 @@
 package com.squad.goals.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.squad.goals.model.Map;
 import com.squad.goals.model.Player;
 import com.squad.goals.model.Tick;
-import com.squad.goals.repository.PlayerRepository;
+import com.squad.goals.repository.GameSessionRepository;
 
 @Service
-public class PlayerService {
+public class GameSessionService {
 
-	private final PlayerRepository playerRepository;
+	private final GameSessionRepository gameSessionRepository;
 
 	@Autowired
-	public PlayerService(PlayerRepository playerRepository) {
-		this.playerRepository = playerRepository;
+	public GameSessionService(GameSessionRepository gameSessionRepository) {
+		this.gameSessionRepository = gameSessionRepository;
 	}
 
-	public List<Tick> getPlayersBySessionId(Long sessionId) {
-	    List<Player> players = playerRepository.getPlayersBySessionId(sessionId);
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	public List<Tick> getGameSession(Long sessionId) {
+	    List<Player> players = gameSessionRepository.getPlayersBySessionId(sessionId);
         TreeMap<Long, List<Player>> timeSets = new TreeMap<>();
+        Map gameMap = gameSessionRepository.getMapBySessionId(sessionId);
+        log.warn("SKLADJLSAKJDKLAJSD " + gameMap);
 
         players.forEach(player -> {
             if (timeSets.containsKey(player.getTimestamp())) {
