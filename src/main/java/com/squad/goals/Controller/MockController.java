@@ -1,5 +1,7 @@
 package com.squad.goals.Controller;
 
+import com.squad.goals.model.GetDataResponse;
+import com.squad.goals.model.Map;
 import com.squad.goals.model.Player;
 import com.squad.goals.model.Tick;
 
@@ -16,7 +18,6 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
-
 @RestController
 @RequestMapping("/api/mock")
 public class MockController {
@@ -30,14 +31,14 @@ public class MockController {
     }
 
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
-    public List<Tick> getGameData(HttpRequest request) {
-        return generateRandomDataSet(1500000000, 10, 50);
+    public GetDataResponse getGameData(HttpRequest request) {
+        return generateRandomDataSet(1500000000, 10, 10);
     }
 
     private Player generateRandomPlayer(String name) {
         Player player = new Player();
-        player.setLocationX(random.nextDouble() * random.nextInt(10000));
-        player.setLocationY(random.nextDouble() * random.nextInt(10000));
+        player.setLocationX(random.nextDouble() * random.nextInt(1000));
+        player.setLocationY(random.nextDouble() * random.nextInt(1000));
         player.setPlayer_name(name);
 
         return player;
@@ -71,7 +72,16 @@ public class MockController {
         return tick;
     }
 
-    private List<Tick> generateRandomDataSet(long statrtTime, int numberOfTicks, int numberOfPlayers) {
+    private GetDataResponse generateRandomDataSet(long statrtTime, int numberOfTicks, int numberOfPlayers) {
+        GetDataResponse dataResponse = new GetDataResponse();
+
+        dataResponse.setMap(generateRandomMap());
+        dataResponse.setTicks(generateRandomTicks(statrtTime, numberOfTicks, numberOfPlayers));
+
+        return dataResponse;
+    }
+
+    private List<Tick> generateRandomTicks(long statrtTime, int numberOfTicks, int numberOfPlayers) {
         List<Tick> ticks = new ArrayList<>();
 
         for (int i = 0; i < numberOfTicks; i++) {
@@ -80,4 +90,19 @@ public class MockController {
 
         return ticks;
     }
+
+    private Map generateRandomMap() {
+        Map map = new Map();
+
+        map.setCorner0x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
+        map.setCorner0y((random.nextDouble() * random.nextInt()) + map.getCorner0x());
+
+        map.setCorner1x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
+        map.setCorner1y((random.nextDouble() * random.nextInt()) + map.getCorner0x());
+
+        map.setName(generateRandomString(10));
+
+        return map;
+    }
 }
+
