@@ -39,7 +39,7 @@ public class MockController {
         Player player = new Player();
         player.setLocationX(random.nextDouble() * random.nextInt(1000));
         player.setLocationY(random.nextDouble() * random.nextInt(1000));
-        player.setPlayer_name(name);
+        player.setPlayerName(name);
 
         return player;
     }

@@ -1,9 +1,35 @@
 package com.squad.goals.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Player {
+	
+	@Id
+	private Long recordingId;
+	private Long playerId;
     private double locationX;
     private double locationY;
-    private String player_name;
+    private Long timestamp;
+//    @Ignore
+    private String playerName;
+
+	public Long getRecordingId() {
+		return recordingId;
+	}
+
+	public void setRecordingId(Long recordingId) {
+		this.recordingId = recordingId;
+	}
+
+	public Long getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(Long playerId) {
+		this.playerId = playerId;
+	}
 
     public double getLocationX() {
         return locationX;
@@ -21,11 +47,19 @@ public class Player {
         this.locationY = locationY;
     }
 
-    public String getPlayer_name() {
-        return player_name;
-    }
+	public Long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setPlayer_name(String player_name) {
-        this.player_name = player_name;
-    }
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
 }
