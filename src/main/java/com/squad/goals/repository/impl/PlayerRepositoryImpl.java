@@ -16,17 +16,18 @@ public class PlayerRepositoryImpl implements PlayerRepositoryCustom {
 
 	@Override public List<Player> getPlayersBySessionId(Long sessionId) {
 		return entityManager.createNativeQuery(
-				"SELECT " +
+				"select * FROM (select * FROM (SELECT " +
 						" ps.recording_id, " +
 						" ps.player_id, " +
-						" t.pos_x, " +
-						" t.pos_y, " +
+						" t.pos_x as locationX, " +
+						" t.pos_y as locationY, " +
 						" t.timestamp " +
 						"FROM ticks t " +
-						" INNER JOIN recording_session rs ON (t.recording_id = rs.recording_id AND rs.session_id = :sessionId)" +
+						" INNER JOIN recording_session rs ON (t.recording_id = rs.recording_id AND rs.session_id = :sessionId) " +
 						" INNER JOIN player_session ps ON (t.recording_id = ps.recording_id) " +
-						"ORDER BY t.timestamp " +
-						"limit 1")
+						"limit 500000) s " +
+						"ORDER BY s.timestamp) g " +
+						"limit 100", Player.class)
 				.setParameter("sessionId", sessionId)
 				.getResultList();
 	}

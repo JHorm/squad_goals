@@ -13,7 +13,7 @@ import com.squad.goals.model.Player;
 import com.squad.goals.service.PlayerService;
 
 @RestController
-@RequestMapping("/api/gameSession")
+@RequestMapping(value = "/api/gameSession", produces = "application/json")
 public class GameSessionController {
 	
 	@Autowired

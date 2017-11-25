@@ -2,6 +2,7 @@ package com.squad.goals.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Player {
@@ -12,7 +13,7 @@ public class Player {
     private double locationX;
     private double locationY;
     private Long timestamp;
-//    @Ignore
+    @Transient
     private String playerName;
 
 	public Long getRecordingId() {
