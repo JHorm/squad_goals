@@ -10,16 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 
 @RestController
-@RequestMapping("/api/mock")
+@RequestMapping(value = "/api/mock", produces = "application/json")
 public class MockController {
     private static Random random;
     private static Set<String> nameSet;
@@ -60,7 +56,7 @@ public class MockController {
 
         if (nameSet.isEmpty()) {
             for (int i = 0; i < numberOfPlayers; i++) {
-                nameSet.add(generateRandomString(10));
+                nameSet.add(getName(i));
             }
         }
 
@@ -91,6 +87,73 @@ public class MockController {
         return ticks;
     }
 
+    private static String getName(int id) {
+        List<String> names = Arrays.asList("NinjasInPyjamas",
+            "Mistake",
+            "SomeTacos",
+            "12Nuns",
+            "AHungryPolarBear",
+            "aDistraction",
+            "XBox",
+            "ShutDown",
+            "RollingBarrelz",
+            "Something",
+            "AllGoodNamesRGone",
+            "Error404",
+            "CerealKillah",
+            "WarHawk",
+            "Kladenstien",
+            "Audacity",
+            "JackSparrow",
+            "RuthlessSlayer",
+            "InfernalHeir",
+            "TheSilentBang",
+            "DarkLord",
+            "NoTolerance",
+            "DexterzProtege",
+            "BeoWulf",
+            "LoneWalker",
+            "SavageHorseman",
+            "GunnerBomb",
+            "CapnBloodBeard",
+            "LastSamurai",
+            "PetalPrincess",
+            "FallenAngel",
+            "Hraefn",
+            "IMTooPrettyToDie",
+            "CatWoman",
+            "SniperFemme",
+            "Zeldarian",
+            "CursedWings",
+            "IceQueen",
+            "SongbirdFatale",
+            "LadyPhantom",
+            "WarriorPriestess",
+            "DeathWish",
+            "SeekNDestroy",
+            "BegForMercy",
+            "ElNino",
+            "FreakingOblin",
+            "NineTees",
+            "EndlessFacepalms",
+            "KungFuMonk",
+            "BrainAxe",
+            "PlzJustDie",
+            "Gridlock",
+            "AndKeySinister",
+            "Chill",
+            "AlQaholic",
+            "HoofHearted",
+            "666Disaster",
+            "MasterGhostlyPresence");
+
+        if (id > names.size()) {
+            id = id - names.size();
+            return names.get(id) + id;
+        }
+        return names.get(id);
+    }
+
     private Map generateRandomMap() {
         Map map = new Map();
 
@@ -105,4 +168,6 @@ public class MockController {
         return map;
     }
 }
+
+
 
