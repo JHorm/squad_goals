@@ -1,5 +1,6 @@
 package com.squad.goals.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,11 +8,22 @@ import javax.persistence.Id;
 public class GameMap {
 
 	@Id
+	@Column(name = "index")
 	private Long index;
+
+	@Column(name = "map_name")
     private String name;
+
+	@Column(name = "corner0x")
     private double corner0x;
+
+	@Column(name = "corner0y")
     private double corner0y;
+
+	@Column(name = "corner1x")
     private double corner1x;
+
+	@Column(name = "corner1y")
     private double corner1y;
 
 	public Long getIndex() {

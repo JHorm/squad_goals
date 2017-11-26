@@ -1,20 +1,30 @@
 package com.squad.goals.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Player {
 
 	@Id
 	@JsonIgnore
+	@Column(name = "timestamp")
 	private Long timestamp;
+	
+	@Column(name = "recording_id")
 	private Long recordingId;
+	
+	@Column(name = "player_id")
 	private Long playerId;
+	
+	@Column(name = "locationX")
     private double locationX;
+	
+	@Column(name = "locationY")
     private double locationY;
 
     @Transient

@@ -18,14 +18,14 @@ public class DatasourceConfiguration {
 	@Bean
 	@Primary
 	@ConfigurationProperties(prefix = "spring.datasource")
-	public DataSourceProperties mssqlDataSourceProperties() {
+	public DataSourceProperties postgresqlDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 
 	@Bean
 	@Primary
 	@ConfigurationProperties(prefix = "spring.datasource")
-	public DataSource mssqlDataSource() {
-		return mssqlDataSourceProperties().initializeDataSourceBuilder().build();
+	public DataSource postgresqlDataSource() {
+		return postgresqlDataSourceProperties().initializeDataSourceBuilder().build();
 	}
 }
