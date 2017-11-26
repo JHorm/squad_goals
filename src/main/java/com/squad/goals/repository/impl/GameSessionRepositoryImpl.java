@@ -42,12 +42,12 @@ public class GameSessionRepositoryImpl implements GameSessionRepositoryCustom {
 						"FROM ticks t " +
 						" INNER JOIN recording_session r ON (t.recording_id = r.recording_id AND r.session_id = ?) " +
 						" INNER JOIN player_session p ON (t.recording_id = p.recording_id) " +
-						"limit 500000) s " +
-						"ORDER BY s.timestamp) g limit 100";
-		
+						"limit 200000) s " +
+						"ORDER BY s.timestamp) g limit 20000";
+
 		return jdbcTemplate.query(sql, new GameSessionWrapper(), sessionId);
 	}
-	
+
 	private static final class GameSessionWrapper implements RowMapper<Player> {
 		public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Player player = new Player();
@@ -56,11 +56,11 @@ public class GameSessionRepositoryImpl implements GameSessionRepositoryCustom {
 			player.setRecordingId(rs.getLong("recording_id"));
 			player.setLocationX(rs.getLong("locationX"));
 			player.setLocationY(rs.getLong("locationY"));
-			
+
 			return player;
 		}
 	}
-	
+
 	@Override
 	public GameMap getMapBySessionId(Long sessionId) {
 		String sql = "SELECT " +
@@ -85,7 +85,7 @@ public class GameSessionRepositoryImpl implements GameSessionRepositoryCustom {
 			map.setCorner0y(rs.getDouble("corner0y"));
 			map.setCorner1x(rs.getDouble("corner1x"));
 			map.setCorner1y(rs.getDouble("corner1y"));
-			
+
 			return map;
 		}
 	}
