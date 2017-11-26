@@ -1,5 +1,6 @@
 package com.squad.goals.service;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,19 +29,24 @@ public class GameSessionService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+
 	public GetDataResponse getGameSession(Long sessionId) {
 	    List<Player> players = gameSessionRepository.getPlayersBySessionId(sessionId);
         TreeMap<Long, List<Player>> timeSets = new TreeMap<>();
         GameMap gameMap = gameSessionRepository.getMapBySessionId(sessionId);
 
+		int i = 0;
 		for (Player player : players) {
 			if (timeSets.containsKey(player.getTimestamp())) {
+			    player.setPlayerName(getName(i++));
 				timeSets.get(player.getTimestamp()).add(player);
 			} else {
 				List<Player> playerList = new ArrayList<>();
+                player.setPlayerName(getName(i++));
 				playerList.add(player);
 				timeSets.put(player.getTimestamp(), playerList);
 			}
+			if (i < 70) i = 0;
 		}
 
         List<Tick> ticks = new ArrayList<>();
@@ -58,4 +64,72 @@ public class GameSessionService {
 
         return dataResponse;
 	}
+
+
+    private static String getName(int id) {
+        List<String> names = Arrays.asList("NinjasInPyjamas",
+            "Mistake",
+            "SomeTacos",
+            "12Nuns",
+            "AHungryPolarBear",
+            "aDistraction",
+            "XBox",
+            "ShutDown",
+            "RollingBarrelz",
+            "Something",
+            "AllGoodNamesRGone",
+            "Error404",
+            "CerealKillah",
+            "WarHawk",
+            "Kladenstien",
+            "Audacity",
+            "JackSparrow",
+            "RuthlessSlayer",
+            "InfernalHeir",
+            "TheSilentBang",
+            "DarkLord",
+            "NoTolerance",
+            "DexterzProtege",
+            "BeoWulf",
+            "LoneWalker",
+            "SavageHorseman",
+            "GunnerBomb",
+            "CapnBloodBeard",
+            "LastSamurai",
+            "PetalPrincess",
+            "FallenAngel",
+            "Hraefn",
+            "IMTooPrettyToDie",
+            "CatWoman",
+            "SniperFemme",
+            "Zeldarian",
+            "CursedWings",
+            "IceQueen",
+            "SongbirdFatale",
+            "LadyPhantom",
+            "WarriorPriestess",
+            "DeathWish",
+            "SeekNDestroy",
+            "BegForMercy",
+            "ElNino",
+            "FreakingOblin",
+            "NineTees",
+            "EndlessFacepalms",
+            "KungFuMonk",
+            "BrainAxe",
+            "PlzJustDie",
+            "Gridlock",
+            "AndKeySinister",
+            "Chill",
+            "AlQaholic",
+            "HoofHearted",
+            "666Disaster",
+            "MasterGhostlyPresence");
+
+        if (id > names.size()) {
+            id = id - names.size();
+            return names.get(id) + id;
+        }
+        return names.get(id);
+    }
 }
