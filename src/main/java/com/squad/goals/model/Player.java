@@ -10,12 +10,13 @@ import javax.persistence.Transient;
 public class Player {
 
 	@Id
+	@JsonIgnore
+	private Long timestamp;
 	private Long recordingId;
 	private Long playerId;
     private double locationX;
     private double locationY;
-    @JsonIgnore
-    private Long timestamp;
+    
     @Transient
     private String playerName;
 

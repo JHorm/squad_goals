@@ -30,17 +30,16 @@ public class GameSessionService {
 	    List<Player> players = gameSessionRepository.getPlayersBySessionId(sessionId);
         TreeMap<Long, List<Player>> timeSets = new TreeMap<>();
         Map gameMap = gameSessionRepository.getMapBySessionId(sessionId);
-        log.warn("SKLADJLSAKJDKLAJSD " + gameMap);
-
-        players.forEach(player -> {
-            if (timeSets.containsKey(player.getTimestamp())) {
-                timeSets.get(player.getTimestamp()).add(player);
-            } else {
-                List<Player> playerList = new ArrayList<>();
-                playerList.add(player);
-                timeSets.put(player.getTimestamp(), playerList);
-            }
-        });
+		
+		for (Player player : players) {
+			if (timeSets.containsKey(player.getTimestamp())) {
+				timeSets.get(player.getTimestamp()).add(player);
+			} else {
+				List<Player> playerList = new ArrayList<>();
+				playerList.add(player);
+				timeSets.put(player.getTimestamp(), playerList);
+			}
+		}
 
         List<Tick> ticks = new ArrayList<>();
 
