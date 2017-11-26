@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Map {
-	
+public class GameMap {
+
 	@Id
 	private Long index;
     private String name;

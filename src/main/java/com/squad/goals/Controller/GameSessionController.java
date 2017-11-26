@@ -1,6 +1,6 @@
 package com.squad.goals.Controller;
 
-import com.squad.goals.model.Tick;
+import com.squad.goals.model.GetDataResponse;
 import com.squad.goals.service.GameSessionService;
 
 import org.apache.http.HttpRequest;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/api/gameSession", produces = "application/json")
 public class GameSessionController {
@@ -20,7 +18,7 @@ public class GameSessionController {
 	private GameSessionService gameSessionService;
 
     @RequestMapping(value = "/getData/{sessionId}", method = RequestMethod.POST)
-    public List<Tick> getGameData(HttpRequest request, @PathVariable Long sessionId) {
+    public GetDataResponse getGameData(HttpRequest request, @PathVariable Long sessionId) {
         return gameSessionService.getGameSession(sessionId);
     }
 }

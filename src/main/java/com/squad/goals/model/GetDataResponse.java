@@ -3,15 +3,15 @@ package com.squad.goals.model;
 import java.util.List;
 
 public class GetDataResponse {
-    Map map;
+    GameMap gameMap;
     List<Tick> ticks;
 
-    public Map getMap() {
-        return map;
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
 
     public List<Tick> getTicks() {

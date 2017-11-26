@@ -1,7 +1,7 @@
 package com.squad.goals.Controller;
 
 import com.squad.goals.model.GetDataResponse;
-import com.squad.goals.model.Map;
+import com.squad.goals.model.GameMap;
 import com.squad.goals.model.Player;
 import com.squad.goals.model.Tick;
 
@@ -71,7 +71,7 @@ public class MockController {
     private GetDataResponse generateRandomDataSet(long statrtTime, int numberOfTicks, int numberOfPlayers) {
         GetDataResponse dataResponse = new GetDataResponse();
 
-        dataResponse.setMap(generateRandomMap());
+        dataResponse.setGameMap(generateRandomMap());
         dataResponse.setTicks(generateRandomTicks(statrtTime, numberOfTicks, numberOfPlayers));
 
         return dataResponse;
@@ -154,18 +154,18 @@ public class MockController {
         return names.get(id);
     }
 
-    private Map generateRandomMap() {
-        Map map = new Map();
+    private GameMap generateRandomMap() {
+        GameMap gameMap = new GameMap();
 
-        map.setCorner0x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
-        map.setCorner0y((random.nextDouble() * random.nextInt()) + map.getCorner0x());
+        gameMap.setCorner0x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
+        gameMap.setCorner0y((random.nextDouble() * random.nextInt()) + gameMap.getCorner0x());
 
-        map.setCorner1x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
-        map.setCorner1y((random.nextDouble() * random.nextInt()) + map.getCorner0x());
+        gameMap.setCorner1x(random.nextDouble() * (random.nextDouble() > 0.5 ? -1 : 1) * random.nextInt(20000));
+        gameMap.setCorner1y((random.nextDouble() * random.nextInt()) + gameMap.getCorner0x());
 
-        map.setName(generateRandomString(10));
+        gameMap.setName(generateRandomString(10));
 
-        return map;
+        return gameMap;
     }
 }
 

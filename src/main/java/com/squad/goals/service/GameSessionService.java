@@ -2,6 +2,7 @@ package com.squad.goals.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.slf4j.Logger;
@@ -9,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.squad.goals.model.Map;
+import com.squad.goals.model.GameMap;
+import com.squad.goals.model.GetDataResponse;
 import com.squad.goals.model.Player;
 import com.squad.goals.model.Tick;
 import com.squad.goals.repository.GameSessionRepository;
@@ -25,12 +27,12 @@ public class GameSessionService {
 	}
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	public List<Tick> getGameSession(Long sessionId) {
+
+	public GetDataResponse getGameSession(Long sessionId) {
 	    List<Player> players = gameSessionRepository.getPlayersBySessionId(sessionId);
         TreeMap<Long, List<Player>> timeSets = new TreeMap<>();
-        Map gameMap = gameSessionRepository.getMapBySessionId(sessionId);
-		
+        GameMap gameMap = gameSessionRepository.getMapBySessionId(sessionId);
+
 		for (Player player : players) {
 			if (timeSets.containsKey(player.getTimestamp())) {
 				timeSets.get(player.getTimestamp()).add(player);
@@ -43,14 +45,17 @@ public class GameSessionService {
 
         List<Tick> ticks = new ArrayList<>();
 
-        timeSets.forEach((key, value) -> {
+        for(Map.Entry<Long,List<Player>> entry : timeSets.entrySet()) {
             Tick tick = new Tick();
-            tick.setTimeStamp(key);
-            tick.setPlayers(value);
-
+            tick.setTimeStamp(entry.getKey());
+            tick.setPlayers(entry.getValue());
             ticks.add(tick);
-        });
+        }
 
-        return ticks;
+        GetDataResponse dataResponse = new GetDataResponse();
+        dataResponse.setTicks(ticks);
+        dataResponse.setGameMap(gameMap);
+
+        return dataResponse;
 	}
 }

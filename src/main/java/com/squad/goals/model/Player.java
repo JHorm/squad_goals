@@ -16,7 +16,7 @@ public class Player {
 	private Long playerId;
     private double locationX;
     private double locationY;
-    
+
     @Transient
     private String playerName;
 
